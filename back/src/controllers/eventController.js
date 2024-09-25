@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
 const Event = require('../models/eventModel');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
-exports.createEvent = async (req, res, next) => {
+exports.createEvent = catchAsync(async (req, res, next) => {
   const newEvent = await Event.create(req.body);
-
-  if (!newEvent) {
-    return next(new Error('New event could not be created'));
-  };
 
   res.status(200).json({
     status: "success",
@@ -14,9 +12,9 @@ exports.createEvent = async (req, res, next) => {
       newEvent: newEvent
     }
   });
-}
+});
 
-exports.getAllEvents = async (req, res, next) => {
+exports.getAllEvents = catchAsync(async (req, res, next) => {
   let query = Event.find();
 
   //Sort
@@ -51,13 +49,13 @@ exports.getAllEvents = async (req, res, next) => {
       events: events,
     },
   });
-};
+});
 
-exports.getEvent = async (req, res, next) => {
+exports.getEvent = catchAsync(async (req, res, next) => {
   const event = await Event.findById(req.params.id);
 
   if (!event) {
-    return next(new Error('Event not found'));
+    return next(new AppError('Event with this ID could not be found', 404));
   }
 
   res.status(200).json({
@@ -66,9 +64,9 @@ exports.getEvent = async (req, res, next) => {
       event: event,
     },
   });
-};
+});
 
-exports.registerForEvent = async (req, res, next) => {
+exports.registerForEvent = catchAsync(async (req, res, next) => {
   const updatedEvent = await Event.findOneAndUpdate(
     { _id: req.params.id },
     { $push: { participants: req.body } },
@@ -79,7 +77,7 @@ exports.registerForEvent = async (req, res, next) => {
   );
 
   if (!updatedEvent) {
-    return next(new Error('Event could not be updated'));
+    return next(new AppError('Event with this ID could not be found', 404));
   };
 
   res.status(200).json({
@@ -88,9 +86,9 @@ exports.registerForEvent = async (req, res, next) => {
       event: updatedEvent
     }
   });
-};
+});
 
-exports.getRegistrationStats = async (req, res, next) => {
+exports.getRegistrationStats = catchAsync(async (req, res, next) => {
   const registrations = await Event.aggregate([
     {
       $match: { _id: mongoose.Types.ObjectId.createFromHexString(req.params.id) },
@@ -124,4 +122,4 @@ exports.getRegistrationStats = async (req, res, next) => {
       registrationsPerDay: registrations,
     },
   });
-}
+});

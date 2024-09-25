@@ -24,7 +24,7 @@ const participantSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-})
+});
 
 const eventSchema = new mongoose.Schema({
   title: {
@@ -51,7 +51,7 @@ const eventSchema = new mongoose.Schema({
     trim: true,
   },
   participants: [participantSchema]
-})
+});
 
 const Event = mongoose.model('Event', eventSchema);
 
