@@ -12,5 +12,8 @@ router.route('/:id')
 router.route('/:id/register')
   .patch(eventController.registerForEvent);
 
+router.route('/:id/registrationStats')
+  .get(eventController.getRegistrationStats)
+
 
 module.exports = router;

@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Event = require('../models/eventModel');
 
 exports.createEvent = async (req, res, next) => {
@@ -88,3 +89,39 @@ exports.registerForEvent = async (req, res, next) => {
     }
   });
 };
+
+exports.getRegistrationStats = async (req, res, next) => {
+  const registrations = await Event.aggregate([
+    {
+      $match: { _id: mongoose.Types.ObjectId.createFromHexString(req.params.id) },
+    },
+    {
+      $unwind: "$participants",
+    },
+    {
+      $group: {
+        _id: {
+          $dateToString: { format: "%Y-%m-%d", date: "$participants.createdAt" }
+        },
+        totalRegistrations: { $sum: 1 },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        date: "$_id",
+        totalRegistrations: 1,
+      }
+    },
+    {
+      $sort: { "date": 1 },
+    },
+  ]);
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      registrationsPerDay: registrations,
+    },
+  });
+}
