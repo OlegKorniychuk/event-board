@@ -23,6 +23,7 @@ export function EventPage(props) {
 
     const fetchEventDetails = async () => {
       try {
+        setLoading(true);
         const response = await fetchData(`/events/${eventId}`);
         setEventDetails(response.data.event);
       } catch (err) {
@@ -36,6 +37,7 @@ export function EventPage(props) {
 
     const fetchRegistrationStats = async () => {
       try {
+        setLoading(true);
         const response = await fetchData(`/events/${eventId}/registrationStats`);
         const stats = response.data.registrationsPerDay;
         const chartData = stats.map((day) => ({
