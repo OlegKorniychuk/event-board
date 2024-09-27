@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const participantSchema = new mongoose.Schema({
-  full_name: {
+  fullName: {
     type: String,
     required: [true, "Please, enter your full name"],
     trim: true,
@@ -11,11 +11,11 @@ const participantSchema = new mongoose.Schema({
     required: [true, "Please, enter your email"],
     trim: true,
   },
-  date_of_birth: {
+  dateOfBirth: {
     type: Date,
     required: [true, "Please, enter your date of birth"],
   },
-  where_heard: {
+  whereHeard: {
     type: String,
     required: [true, "Please, tell us how did you learn about this event"],
     enum: ["Social Media", "Friends", "Found Myself", "Other"]
