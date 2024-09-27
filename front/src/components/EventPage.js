@@ -63,10 +63,10 @@ export function EventPage(props) {
     setSearchQuery(e.target.value);
   };
 
-  const filteredParticipants = eventDetails?.participants?.filter((user) =>
+  const filteredParticipants =  eventDetails.aprticipants.length ? eventDetails.participants.filter((user) =>
     user.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     user.email.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  ) : [];
 
   if (loading) {
     return (
@@ -88,7 +88,7 @@ export function EventPage(props) {
   return (
     <div className="main-container">
       <div className="header HomeHeader">
-        <h1>Who has registered for {eventDetails.title}:</h1>
+        <h1>Who has registered for {eventDetails?.title}:</h1>
         <div className="button-container">
           <Link to='/events' className="link-button">Back</Link>
         </div>
@@ -105,7 +105,7 @@ export function EventPage(props) {
       </div>
 
       <div>
-        {dataPoints.length > 0 ? (
+        {dataPoints?.length > 0 ? (
           <Chart dataPoints={dataPoints}/>
           ) : (
             <div>No chart data</div>
