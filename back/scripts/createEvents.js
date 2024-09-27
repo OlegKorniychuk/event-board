@@ -1,14 +1,15 @@
 const fs = require('fs');
 const dotenv = require('dotenv');
+const path = require('path');
 const Event = require('../src/models/eventModel');
 
 const mongoose = require('mongoose');
 
-dotenv.config({ path: '.env' });
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const EVENT_COUNT = 100;
 const MAX_DATE_RANGE = 300;
-const eventExample = fs.readFileSync(`${__dirname}/eventExample.json`, { encoding: 'utf-8' });
+const eventExample = fs.readFileSync(path.join(__dirname, '/eventExample.json'), { encoding: 'utf-8' });
 
 const importData = async (events) => {
   try {
