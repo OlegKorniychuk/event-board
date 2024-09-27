@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
+const cron = require('node-cron');
 const app = require('./app');
+const cronJob = require('../scripts/cronJob');
 
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
@@ -24,3 +26,7 @@ mongoose
 app.listen(PORT, () => {
   console.log(`Server up and running at port ${PORT}`);
 });
+
+if (process.env.ENVIRONMENT === 'local') {
+  cron.schedule('*/1 * * * *', cronJob);
+}
