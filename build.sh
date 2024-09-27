@@ -2,7 +2,7 @@
 
 cd front
 npm install
-npm build
+npm run build
 
 cd ../back
 npm install
