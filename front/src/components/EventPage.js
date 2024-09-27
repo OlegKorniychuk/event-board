@@ -63,7 +63,7 @@ export function EventPage(props) {
     setSearchQuery(e.target.value);
   };
 
-  const filteredParticipants =  eventDetails.aprticipants.length ? eventDetails.participants.filter((user) =>
+  const filteredParticipants =  eventDetails?.participants?.length ? eventDetails.participants.filter((user) =>
     user.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     user.email.toLowerCase().includes(searchQuery.toLowerCase())
   ) : [];
