@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export function Event(props) {
   const date = new Date(props.event.date);
   const yyyy = date.getFullYear();
-  let mm = date.getMonth() + 1; // Months start at 0!
+  let mm = date.getMonth() + 1;
   let dd = date.getDate();
 
   if (dd < 10) dd = '0' + dd;

@@ -67,7 +67,7 @@ export function RegisterPage() {
     }
     try {
       const data = await fetchData(
-        `/api/events/${eventId}/register`,
+        `/events/${eventId}/register`,
         "PATCH",
         { 'Content-Type': 'application/json' },
         formData

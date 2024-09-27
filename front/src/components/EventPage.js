@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { User } from "./User";
+import { Chart } from "./Chart";
 import { fetchData } from "../utils/fetchData";
 
 export function EventPage(props) {
@@ -9,6 +10,7 @@ export function EventPage(props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [dataPoints, setdataPoints] = useState([]);
 
   const params = useParams();
 
@@ -31,7 +33,28 @@ export function EventPage(props) {
         setLoading(false);
       }
     }
+
+    const fetchRegistrationStats = async () => {
+      try {
+        const response = await fetchData(`/events/${eventId}/registrationStats`);
+        const stats = response.data.registrationsPerDay;
+        const chartData = stats.map((day) => ({
+          x: new Date(day.date),
+          y: day.totalRegistrations
+        }));
+        
+        setdataPoints(chartData);
+      } catch (err) {
+        console.log(err);
+        setError(err);
+        setdataPoints([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+
     fetchEventDetails();
+    fetchRegistrationStats();
   }, [eventId]);
 
   const handleSearchChange = (e) => {
@@ -77,6 +100,14 @@ export function EventPage(props) {
           onChange={handleSearchChange}
           className="search-input"
         />
+      </div>
+
+      <div>
+        {dataPoints.length > 0 ? (
+          <Chart dataPoints={dataPoints}/>
+          ) : (
+            <div>No chart data</div>
+          )}
       </div>
 
       <div className="cards-container">
