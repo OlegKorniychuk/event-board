@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Event } from './Event';
 import { fetchData } from '../utils/fetchData';
 import { HomeHeader } from './HomeHeader';
@@ -44,7 +44,7 @@ export function HomePage() {
   const fetchEvents = async () => {
     try {
       setLoading(true);
-      const data = await fetchData(`http://localhost:3500/api/events/?page=${page}&sort=${sort}`);
+      const data = await fetchData(`/events/?page=${page}&sort=${sort}`);
       const newEvents = data.data.events;
       if (newEvents.length === 0) {
         setHasMore(false);

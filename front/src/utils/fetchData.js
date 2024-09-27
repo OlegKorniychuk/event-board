@@ -1,5 +1,6 @@
 export const fetchData = async (url, fetchMethod="GET", headers={}, body=null) => {
-  const response = await fetch(url, {
+  const API_URL = process.env.REACT_APP_API_URL
+  const response = await fetch(`${API_URL}${url}`, {
     method: fetchMethod,
     headers: headers,
     body: body && JSON.stringify(body)

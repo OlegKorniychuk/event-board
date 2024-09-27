@@ -21,7 +21,7 @@ export function EventPage(props) {
 
     const fetchEventDetails = async () => {
       try {
-        const response = await fetchData(`http://localhost:3500/api/events/${eventId}`);
+        const response = await fetchData(`/events/${eventId}`);
         setEventDetails(response.data.event);
       } catch (err) {
         console.log(err);

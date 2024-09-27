@@ -1,10 +1,5 @@
-import { useState } from "react";
-
 export function HomeHeader ({ sortValue, onSortChange }) {
-  const [select, setSelect] = useState(sortValue);
-
   const handleSortChange = (e) => {
-    setSelect(e.target.value)
     onSortChange(e.target.value);
   }
 
