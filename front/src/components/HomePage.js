@@ -16,6 +16,7 @@ export function HomePage() {
   const onSortChange = (value) => {
     setPage(1);
     setEvents([]);
+    setHasMore(true);
     setSort(value);
 
   }
